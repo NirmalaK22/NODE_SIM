@@ -1,0 +1,5 @@
+TESTRAIL_USER = "daniel.brym@eftlab.com"
+TESTRAIL_API_KEY = "8PHo0GxLkcG2SKSM8EZL-N0bxD3gQMy3g17y.lOk6"
+BPNODE_API_KEY = "6e1e6dfd-f222-40ee-a5b9-1ee8430cea2c"
+BPNODE_API_URL = "https://eftex-oltp1.eftlab.com:8043/Bus"
+THIN_CLIENT_API_URL = "http://localhost:8082/api"
