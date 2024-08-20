@@ -9,6 +9,18 @@ time_few_mins_ago = current_time - timedelta(0,30)
 formatted_time = time_few_mins_ago.strftime("%Y-%m-%d %H:%M:%S.%f0 +02:00")
 current_time_formatted = current_time.strftime("%Y-%m-%d %H:%M:%S.%f0 +02:00")
 
+batch_cmd={
+  "destination":"BatchManager",
+   "messageType":"BatchEntitiesRead",
+   "apiKey":Config.BPNODE_API_KEY,
+   "data":{
+      "parameters":{
+         "from":"2024-07-22 08:51:00.0000000 +02:00",
+         "to":"2024-07-22 09:52:12.1530000 +02:00"
+      }
+   }
+}
+
 transaction_cmd_from_to={
   "destination":"Transaction",
    "messageType":"TransactionsRead",
@@ -49,19 +61,19 @@ saf_cmd={
 }
 url =Config.BPNODE_API_URL
 
-def events(message1=None,message2=None):
+def events(message1=None):
     r = requests.post(url, json=eventHandler_cmd, verify=False)
     print(r.status_code)
     if r.status_code ==200:
         bpnode_content=json.loads(r.text)
         bpnode_events=bpnode_content['events']
         for i in range(len(bpnode_events)):
-            print("event message: ",bpnode_events[i])
-            if message1 in bpnode_events[i]["message"] or message2 in bpnode_events[i]["message"]:
+            #print("event message: ",bpnode_events[i])
+            if message1 in bpnode_events[i]["message"]:
                 event_message=bpnode_events[i]['message']
-                print("override event occurred: ")
+                print("Event raised ")
                 return event_message
-def transactions(terminalId=None,amountValue=None):
+def transactions(amountValue=None):
     global terminal_id,terminal_value
     r = requests.post(url, json=transaction_cmd, verify=False)
     print(r.status_code)
@@ -70,11 +82,6 @@ def transactions(terminalId=None,amountValue=None):
         transaction_message = bpnode_content['data']
         for i in range(len(transaction_message)):
             #print("transaction.json message read: ",transaction_message[i])
-            if (terminalId != '' and terminalId is not None) and amountValue is not None:
-                if terminalId in transaction_message[i]['terminalId'] and amountValue in transaction_message[i]['amountValue']:
-                    terminal_id=transaction_message[i]['terminalId']
-                    print("terminal id and amount value: ",terminal_id)
-                    return terminal_id
             if amountValue in transaction_message[i]['amountValue']:
                 terminal_value=transaction_message[i]['amountValue']
                 print("amount value: ",terminal_value)

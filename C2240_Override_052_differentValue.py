@@ -29,12 +29,12 @@ input_data='{\
 
 def C2240_Override_052_differentValue(testrail_run_id):
     bpsim_out = sim1.transaction_0200_POS(input_data)
-    bpnode_event = bp1.events("MAC",'Mandatory')
-    bpnode_transaction_history = bp1.transactions(None, "33")
+    bpnode_event = bp1.events("PIN_BLOCK")
+    bpnode_transaction_history = bp1.transactions("33")
     bpnode_saf = bp1.saf_queue()
     print("event raised ", "\nTerminal Data: ", bpnode_transaction_history, "\nSAF queue: ", bpnode_saf)
-    if bpsim_out is None and ("MAC" in bpnode_event and bpnode_transaction_history is None and bpnode_saf is None):
-        print("TestCase passed---Expected results:  Event is raised, transaction.json is not counted to batch totals, response with RC 916 is send back to TermApp POS device, no record stored in store and forward queue")
+    if bpsim_out is None and ("PIN_BLOCK" in bpnode_event and '33' in bpnode_transaction_history and bpnode_saf is None):
+        print("TestCase passed---Expected results:  Event is raised, transaction is not counted to batch totals, response with RC 916 is send back to TermApp POS device, no record stored in store and forward queue")
         case_id = "2240"
         status_id = "1"  # for pass
         res1.post_testrail_results(testrail_run_id, case_id, status_id)

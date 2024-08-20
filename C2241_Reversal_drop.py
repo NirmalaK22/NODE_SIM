@@ -36,7 +36,7 @@ input_data='{\
 
 def C2241_Reversal_drop(testrail_run_id):
     bpsim_out = Bpsim_0200.transaction_0200_POS(input_data)
-    bpnode_transaction_history = Bpnode.transactions('', "1234")
+    bpnode_transaction_history = Bpnode.transactions("1234")
     bpnode_saf = Bpnode.saf_queue()
     print("Terminal found: ", bpnode_transaction_history, "\nSAF queue: ", bpnode_saf)
 

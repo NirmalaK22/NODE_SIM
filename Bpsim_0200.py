@@ -1,6 +1,7 @@
 import json
 import requests
 import Config
+
 def transaction_0200_POS(input_data):
     if "txt" in input_data:
         headers = {
@@ -14,7 +15,7 @@ def transaction_0200_POS(input_data):
     content = response.content
     #print("content of the file:\n", content)
     data = json.loads(content)
-    print("data: ",data)
+    #print("data: ",data)
     if "Timed Out" in data['Status']:
         print("bpsim response: ", data)
         return "No Response"
