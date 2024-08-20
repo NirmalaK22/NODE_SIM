@@ -84,7 +84,7 @@ def transactions(amountValue=None):
             #print("transaction.json message read: ",transaction_message[i])
             if amountValue in transaction_message[i]['amountValue']:
                 terminal_value=transaction_message[i]['amountValue']
-                print("amount value: ",terminal_value)
+                #print("amount value: ",terminal_value)
                 return terminal_value
 
 def saf_queue():
